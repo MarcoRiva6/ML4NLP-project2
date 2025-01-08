@@ -3,7 +3,6 @@ import pandas as pd
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import load_model
 import pickle
 
 data_path = './Traduction avis clients'
