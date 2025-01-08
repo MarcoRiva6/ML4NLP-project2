@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-from gensim.models import Word2Vec
-from nltk.tokenize import word_tokenize
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import numpy as np
