@@ -17,7 +17,7 @@ def load_data():
 @st.cache_data
 def compute_ngram(n_grams):
     """Compute the top n-grams for the dataset."""
-    vectorizer = CountVectorizer(ngram_range=(2, n_grams))  # bigrams to n-grams
+    vectorizer = CountVectorizer(ngram_range=(n_grams, n_grams))  # bigrams to n-grams
     ngrams = vectorizer.fit_transform(df['avis'])
     ngram_counts = pd.DataFrame(ngrams.sum(axis=0), columns=vectorizer.get_feature_names_out()).T
     ngram_counts.columns = ['Frequency']
@@ -44,7 +44,7 @@ ngram_counts = compute_ngram(n_grams)
 
 # Display top 10 n-grams
 st.subheader(f"Top {n_grams}-Grams in the Dataset")
-st.dataframe(ngram_counts.head(10), use_container_width=True)
+st.dataframe(ngram_counts, use_container_width=True)
 
 # User input for bar plot length
 length = st.sidebar.slider('Bar Plot Length', min_value=5, max_value=50, value=10, step=5)
