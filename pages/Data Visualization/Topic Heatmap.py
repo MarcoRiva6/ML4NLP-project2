@@ -4,7 +4,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 import pickle
-from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 models_path = './models'

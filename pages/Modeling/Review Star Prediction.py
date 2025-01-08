@@ -6,8 +6,6 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
-from tensorflow.keras.layers import Embedding, Dense, GlobalAveragePooling1D
-from tensorflow.keras.initializers import RandomUniform
 
 data_path = './Traduction avis clients'
 models_path = './models'
