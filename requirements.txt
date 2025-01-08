@@ -8,7 +8,7 @@ tensorflow-hub
 wordcloud
 matplotlib
 seaborn
-gensim
+gensim==4.3.3
 transformers
 tensorflow
 tensorflow-hub
