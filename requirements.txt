@@ -9,3 +9,8 @@ matplotlib
 seaborn
 gensim
 transformers
+tensorflow
+tensorflow-hub
+wordcloud
+matplotlib
+seaborn
