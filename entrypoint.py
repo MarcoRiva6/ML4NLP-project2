@@ -1,4 +1,5 @@
 import streamlit as st
+import matplotlib.pyplot as plt
 
 # Set page configuration
 st.set_page_config(
@@ -28,6 +29,8 @@ pg = st.navigation(
     }
 )
 
+plt.style.use('dark_background')
+
 pg.run()
 
 # Links
@@ -37,4 +40,11 @@ st.sidebar.markdown("""
 - [Colab Notebook](https://colab.research.google.com/drive/1V2qJyJfu0YqazOcWnE-c24T2hAIpUBLB)
 - [Original dataset](https://drive.google.com/file/d/1_kg5JzAzntzLI6eGM3_vmUSoeWk7f8ip/view?usp=sharing)
 - [This Streamlit App on Community Cloud](https://ml4nlp-project2-6qzrsnb3spgf3gqd9hekpf.streamlit.app)
+""")
+
+st.sidebar.header("Notes about running this app")
+st.sidebar.markdown("""
+- The figures displaying is optimized for the **dark theme**: please switch to the dark theme for the best experience.
+- While running this app from Community Cloud, the **resource limits** may be easily reached: please consider running this app locally,
+    (following the instructions at the beginning of the Colab notebook) or wait for us to restart the app so to reset the resource limits.
 """)

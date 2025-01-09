@@ -15,16 +15,13 @@ max_words = 10000  # Vocabulary size
 max_len = 50  # Maximum length of sequences
 
 
-# Cache the loading of the dataset
 @st.cache_resource
 def load_my_model():
-    """Load the trained model."""
     return load_model(os.path.join(models_path, 'topic_classification_model.keras'))
 
 
 @st.cache_resource
 def load_tokenizer(X_train):
-    """Load the tokenizer."""
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(X_train)
 
@@ -33,7 +30,6 @@ def load_tokenizer(X_train):
 
 @st.cache_data
 def load_data():
-    """Load the cleaned dataset."""
     df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned_topics.pkl'))
 
     reviews = df[['avis', 'topic']]
@@ -41,22 +37,26 @@ def load_data():
     X = reviews['avis']
     y = reviews['topic']
 
-    # Split data into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     return X, y, X_train, X_test, y_train, y_test
 
 
-# Initialize the Streamlit app
 st.title("Category Prediction")
-st.write("Description.")
+st.markdown("""
+The app classifies reviews into the the found categories using pre-trained embeddings.
 
-# Load the trained model
+The previously found categories are:
+- Policy Claims
+- Satisfaction and Pricing
+- Service Experience
+- Contracts and Policy Management
+""")
+
 model = load_my_model()
 X, y, X_train, X_test, y_train, y_test = load_data()
 tokenizer = load_tokenizer(X_train)
 
-# Input for prediction
 st.write("### Predict Category")
 example_review = st.text_input("Enter a review:", "Prix raisonnables pour un bon service.")
 if st.button("Predict"):
@@ -65,4 +65,4 @@ if st.button("Predict"):
     predicted_category = model.predict(example_padded)
     category_labels = y.unique()
     predicted_label = category_labels[np.argmax(predicted_category)]
-    st.write(f"Predicted Category for '{example_review}': {predicted_label}")
+    st.write(f"Predicted Category: {predicted_label}")

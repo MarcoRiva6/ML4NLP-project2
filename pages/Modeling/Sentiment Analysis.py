@@ -12,7 +12,6 @@ max_words = 10000  # Vocabulary size
 max_len = 50  # Maximum length of sequences
 
 
-# Cache the loading of the dataset
 @st.cache_resource
 def load_my_model():
     """Load the trained model."""
@@ -33,7 +32,6 @@ def load_vecktorizer(X_train, X_test):
 
 @st.cache_data
 def load_data():
-    """Load the cleaned dataset."""
     df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned_sentiment.pkl'))
 
     reviews = df[['avis', 'sentiment']]
@@ -41,22 +39,21 @@ def load_data():
     X = reviews['avis']
     y = reviews['sentiment']
 
-    # Split data into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     return X, y, X_train, X_test, y_train, y_test
 
 
-# Initialize the Streamlit app
 st.title("Sentiment Analysis")
-st.write("Description.")
+st.markdown("""
+The app redicts binary sentiment classification (positive or negative sentiment) using the model resulting
+ from the training of TF-IDF and Logistic Regression on the notebook.
+""")
 
-# Load the trained model
 model = load_my_model()
 X, y, X_train, X_test, y_train, y_test = load_data()
 vectorizer = load_vecktorizer(X_train, X_test)
 
-# Input for prediction
 st.write("### Sentiment Anaylsis")
 example_review = st.text_input("Enter a review:", "Service client va bien.")
 if st.button("Predict"):

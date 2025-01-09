@@ -7,47 +7,41 @@ import os
 
 data_path = './Traduction avis clients'
 
-# Sample DataFrame with reviews
 @st.cache_data
 def load_data():
-    """Load the cleaned dataset."""
     return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
 
-# Function to compute word frequencies
+@st.cache_data
 def compute_word_counts(reviews):
     word_counts = Counter(" ".join(reviews).lower().split())
     return word_counts
 
-# Generate Word Cloud
-def generate_wordcloud(word_counts):
-    wordcloud = WordCloud(width=800, height=400, background_color='white').fit_words(word_counts)
+@st.cache_data
+def generate_wordcloud(word_counts, max_words=None):
+    wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=max_words).fit_words(word_counts)
     return wordcloud
 
-# Streamlit App
 st.title("Most Common Words Visualization")
-st.write("This app visualizes the most frequent words in customer reviews using a table and a Word Cloud.")
+st.write("This app visualizes the most frequent words in customer reviews using a Word Cloud. The ordered list of most common words is also displayed in a table.")
 
-# Load data
 df = load_data()
 
-# Compute word counts
 word_counts = compute_word_counts(df['avis'])
-
-# Slider to select the number of top words
-top_n = st.slider("Select the number of top words to display:", min_value=5, max_value=50, value=10)
-
-# Display most common words in a table
-most_common_words = word_counts.most_common(top_n)
-df_most_common_words = pd.DataFrame(most_common_words, columns=['Word', 'Occurrences'])
-st.write("### Table of Most Common Words")
-st.table(df_most_common_words)
 
 # Display Word Cloud
 st.write("### Word Cloud of Frequent Words")
-wordcloud = generate_wordcloud(word_counts)
+
+top_n = st.slider("Number of top words in the cloud:", min_value=10, max_value=100, value=50)
+
+most_common_words = word_counts.most_common()
+wordcloud = generate_wordcloud(word_counts, max_words=top_n)
 
 fig, ax = plt.subplots(figsize=(10, 5))
 ax.imshow(wordcloud, interpolation='bilinear')
 ax.axis('off')
 ax.set_title("Word Cloud of Frequent Words", fontsize=16)
 st.pyplot(fig)
+
+st.write("### Table of Most Common Words")
+df_most_common_words = pd.DataFrame(most_common_words, columns=['Word', 'Occurrences'])
+st.dataframe(df_most_common_words, use_container_width=True)

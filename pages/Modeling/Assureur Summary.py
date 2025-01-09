@@ -5,7 +5,6 @@ import os
 
 data_path = './Traduction avis clients'
 
-# Load the model and tokenizer
 @st.cache_resource
 def load_model_and_tokenizer():
     model_name = "plguillou/t5-base-fr-sum-cnndm"
@@ -17,15 +16,13 @@ def load_model_and_tokenizer():
 tokenizer, model = load_model_and_tokenizer()
 
 
-# Function to get the first sentence of the summary
 def get_first_sentence(text):
     period_pos = text.find('.')
     if period_pos != -1:
         return text[:period_pos + 1]
     return text
 
-
-# Summarization function
+@st.cache_data
 def generate_insurer_summary(insurer_name, df):
     reviews = df[df['assureur'] == insurer_name]['avis'].tolist()
     reviews = list(set(reviews))
@@ -43,31 +40,41 @@ def generate_insurer_summary(insurer_name, df):
     return get_first_sentence(summary)
 
 
-# Sample DataFrame for reviews
 @st.cache_data
 def load_data():
-    """Load the cleaned dataset."""
     return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
 
 
 df = load_data()
 
-# Streamlit App Layout
-st.title("Insurer Review Summarization")
-st.write("This app summarizes customer reviews for a selected insurer in one or two sentences.")
+st.title("Insurer Review Summarization using LLM")
+st.markdown("""
+This app summarizes customer reviews for a selected insurer in one or two sentences.
 
-# Insurer Selection
-insurer_name = st.selectbox("Select an Insurer:", df['assureur'].unique(), index=52)
+The goal is to summarize the key points, including positive and negative aspects.
+The summarization process is developed considering the computational constraints and ensure meaningful output.
+This is way the results may be vague or erroneous, but on average this model succeeds in summarizing the reviews.
 
-# Generate Summary
+Some asssureur that can be tried:
+- AMV
+- MetLife
+- Allianz
+- Sma
+- L'olivier Assurance
+- Magnolia
+- Crédit Mutuel
+---
+""")
+
+insurer_name = st.selectbox("Select an Insurer:", sorted(df['assureur'].unique()), index=52)
+
 if st.button("Generate Summary"):
     with st.spinner("Generating summary..."):
         summary = generate_insurer_summary(insurer_name, df)
-    st.success("Summary generated!")
+    st.success("Summary generated")
     st.write(f"### Summary for {insurer_name}")
     st.write(summary)
 
-# Display Reviews
 if st.checkbox("Show Reviews"):
     st.write(f"### Reviews for {insurer_name}")
     insurer_reviews = df[df['assureur'] == insurer_name]

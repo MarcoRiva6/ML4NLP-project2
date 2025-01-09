@@ -8,25 +8,20 @@ import os
 data_path = './Traduction avis clients'
 models_path = './models'
 
-# Load precomputed data
 @st.cache_data
 def load_precomputed_data():
-    # Load the precomputed review embeddings
-    review_embeddings = np.load(os.path.join(models_path, "review_embeddings.npy"))  # Update with the actual file path
-    # Load the DataFrame containing the reviews, assured, and product details
-    df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))  # Update with the actual file path
+    review_embeddings = np.load(os.path.join(models_path, "review_embeddings.npy"))
+    df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
     return review_embeddings, df
 
 review_embeddings, df = load_precomputed_data()
 
-# Load the Universal Sentence Encoder model
 @st.cache_resource
 def load_use_model():
     return hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 
 embed = load_use_model()
 
-# Semantic search function
 def semantic_search(query, embeddings, top_k=3):
     query_embedding = embed([query])
     similarities = cosine_similarity(query_embedding, embeddings).flatten()
@@ -42,25 +37,26 @@ def semantic_search(query, embeddings, top_k=3):
     ]
     return results
 
-# Streamlit App Layout
 st.title("Semantic Search for Reviews")
-st.write("This app allows you to search for relevant reviews based on a query. Use the slider to set the number of top results and click the button to run your query.")
+st.markdown("""
+This app uses Universal Sentence Encoder (USE) to encode both reviews and search queries into dense vectors.
+By calculating cosine similarity between the query and the reviews, it retrieves and ranks the most relevant reviews
+based on the provided query.
+""")
 
-# Query Input
-query = st.text_input("Enter your query:", value="Quel est le service client le plus rapide ?")
+st.write("### Query")
 
-# Top-K Slider
-top_k = st.slider("Select the number of top results to display:", min_value=1, max_value=10, value=3)
+query = st.text_input("Enter a query:", value="Quel est le service client le plus rapide ?")
 
-# Button to Run the Query
+top_k = st.slider("Top results to display:", min_value=1, max_value=10, value=3)
+
 if st.button("Run Query"):
     if query:
-        st.write(f"### Query: {query}")
         results = semantic_search(query, review_embeddings, top_k=top_k)
 
         if results:
             st.write("### Top Relevant Reviews:")
             result_df = pd.DataFrame(results)
-            st.table(result_df)
+            st.dataframe(result_df, use_container_width=True)
         else:
             st.write("No results found.")
