@@ -66,7 +66,7 @@ Some asssureur that can be tried:
 ---
 """)
 
-insurer_name = st.selectbox("Select an Insurer:", sorted(df['assureur'].unique()), index=52)
+insurer_name = st.selectbox("Select an Insurer:", sorted(df['assureur'].unique()), index=0)
 
 if st.button("Generate Summary"):
     with st.spinner("Generating summary..."):
