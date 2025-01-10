@@ -1,5 +1,6 @@
 /notes.txt
 /Project2-MachineLearningForNLP.iml
-/.idea/
 glove.6B.50d.txt
 /__MACOSX/
+/.idea/
+/.devcontainer/
