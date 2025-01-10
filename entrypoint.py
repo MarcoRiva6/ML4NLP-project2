@@ -37,7 +37,7 @@ pg.run()
 st.sidebar.header("Links")
 st.sidebar.markdown("""
 - [GitHub Repository](https://github.com/MarcoRiva6/ML4NLP-project2)
-- [Colab Notebook](https://colab.research.google.com/drive/1V2qJyJfu0YqazOcWnE-c24T2hAIpUBLB)
+- [Colab Notebook](https://colab.research.google.com/drive/1YK1_AoIyKyh4Kae5htVmt0CAHUSVIBYf)
 - [Original dataset](https://drive.google.com/file/d/1_kg5JzAzntzLI6eGM3_vmUSoeWk7f8ip/view?usp=sharing)
 - [This Streamlit App on Community Cloud](https://ml4nlp-project2-6qzrsnb3spgf3gqd9hekpf.streamlit.app)
 """)
