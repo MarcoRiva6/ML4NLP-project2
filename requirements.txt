@@ -10,8 +10,7 @@ matplotlib
 seaborn
 gensim==4.3.3
 transformers
-tensorflow
-tensorflow-hub
+tiktoken
 wordcloud
 matplotlib
 seaborn
