@@ -53,8 +53,6 @@ st.session_state.ds_cleaned = ds_clenaed
 st.session_state.ds_topics = ds_topics
 st.session_state.ds_sentiment = ds_sentiment
 
-pg.run()
-
 # Links
 st.sidebar.header("Links")
 st.sidebar.markdown("""
@@ -70,3 +68,5 @@ st.sidebar.markdown("""
 - While running this app from Community Cloud, the **resource limits** may be easily reached: please consider running this app locally,
     (following the instructions at the beginning of the Colab notebook) or wait for us to restart the app so to reset the resource limits.
 """)
+
+pg.run()
