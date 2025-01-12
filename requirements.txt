@@ -9,7 +9,7 @@ wordcloud
 matplotlib
 seaborn
 gensim==4.3.3
-transformers
+transformers==4.46.3
 tiktoken
 wordcloud
 matplotlib
