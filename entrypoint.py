@@ -1,5 +1,19 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+import pandas as pd
+import os
+
+data_path = './Traduction avis clients'
+models_path = './models'
+
+@st.cache_data
+def load_data(type='cleaned'):
+    if type == 'cleaned':
+        return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
+    elif type == 'topics':
+        return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned_topics.pkl'))
+    elif type == 'sentiment':
+        return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned_sentiment.pkl'))
 
 # Set page configuration
 st.set_page_config(
@@ -30,6 +44,14 @@ pg = st.navigation(
 )
 
 plt.style.use('dark_background')
+
+ds_clenaed = load_data('cleaned')
+ds_topics = load_data('topics')
+ds_sentiment = load_data('sentiment')
+
+st.session_state.ds_cleaned = ds_clenaed
+st.session_state.ds_topics = ds_topics
+st.session_state.ds_sentiment = ds_sentiment
 
 pg.run()
 

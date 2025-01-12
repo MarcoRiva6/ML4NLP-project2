@@ -9,13 +9,6 @@ data_path = './Traduction avis clients'
 models_path = './models'
 
 
-# Sample DataFrame with reviews
-@st.cache_data
-def load_data():
-    """Load the cleaned dataset."""
-    return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
-
-
 # Train Word2Vec model
 @st.cache_resource
 def train_word2vec():

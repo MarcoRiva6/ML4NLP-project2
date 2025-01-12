@@ -21,7 +21,7 @@ def load_lda_model():
 @st.cache_data
 def load_terms_and_labels():
 
-    df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
+    df = st.session_state.ds_cleaned
 
     # Replace with your logic to load feature names (terms) and topic labels
     vectorizer = TfidfVectorizer(max_df=0.9, min_df=2)  # Adjust for French stopwords

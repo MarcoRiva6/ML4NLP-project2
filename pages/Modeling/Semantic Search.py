@@ -11,7 +11,7 @@ models_path = './models'
 @st.cache_data
 def load_precomputed_data():
     review_embeddings = np.load(os.path.join(models_path, "review_embeddings.npy"))
-    df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
+    df = st.session_state.ds_cleaned
     return review_embeddings, df
 
 review_embeddings, df = load_precomputed_data()

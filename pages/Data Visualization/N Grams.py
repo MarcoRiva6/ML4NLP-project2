@@ -7,10 +7,6 @@ import matplotlib.pyplot as plt
 data_path = './Traduction avis clients'
 
 @st.cache_data
-def load_data():
-    return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
-
-@st.cache_data
 def compute_ngram(n_grams):
     vectorizer = CountVectorizer(ngram_range=(n_grams, n_grams))
     ngrams = vectorizer.fit_transform(df['avis'])
@@ -18,7 +14,7 @@ def compute_ngram(n_grams):
     ngram_counts.columns = ['Frequency']
     return ngram_counts.sort_values(by='Frequency', ascending=False).head(100)
 
-df = load_data()
+df = st.session_state.ds_cleaned
 
 st.title("N-Gram Analysis Dashboard")
 st.markdown("""

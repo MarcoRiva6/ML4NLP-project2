@@ -32,7 +32,7 @@ def load_vecktorizer(X_train, X_test):
 
 @st.cache_data
 def load_data():
-    df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned_sentiment.pkl'))
+    df = st.session_state.ds_sentiment
 
     reviews = df[['avis', 'sentiment']]
 

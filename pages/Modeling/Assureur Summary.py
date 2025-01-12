@@ -40,12 +40,7 @@ def generate_insurer_summary(insurer_name, df):
     return get_first_sentence(summary)
 
 
-@st.cache_data
-def load_data():
-    return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
-
-
-df = load_data()
+df = st.session_state.ds_cleaned
 
 st.title("Insurer Review Summarization using LLM")
 st.markdown("""

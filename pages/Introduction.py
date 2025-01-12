@@ -4,12 +4,6 @@ import os
 
 data_path = './Traduction avis clients'
 
-# Cache the loading of the dataset
-@st.cache_data
-def load_data():
-    """Load the cleaned dataset."""
-    return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
-
 # Main title
 st.title("NLP Project 2: Supervised Learning and Applications")
 st.markdown("""
@@ -45,7 +39,7 @@ Different preprocessing steps were applied to clean the data and prepare it for 
 The cleaned dataset is shown below:
 """)
 # Data Preprocessing Table
-cleaned_dataset = load_data()
+cleaned_dataset = st.session_state.ds_cleaned
 st.dataframe(cleaned_dataset)
 
 st.markdown("""

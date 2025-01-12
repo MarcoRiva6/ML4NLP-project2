@@ -8,10 +8,6 @@ import os
 data_path = './Traduction avis clients'
 
 @st.cache_data
-def load_data():
-    return pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
-
-@st.cache_data
 def compute_word_counts(reviews):
     word_counts = Counter(" ".join(reviews).lower().split())
     return word_counts
@@ -24,7 +20,7 @@ def generate_wordcloud(word_counts, max_words=None):
 st.title("Most Common Words Visualization")
 st.write("This app visualizes the most frequent words in customer reviews using a Word Cloud. The ordered list of most common words is also displayed in a table.")
 
-df = load_data()
+df = st.session_state.ds_cleaned
 
 word_counts = compute_word_counts(df['avis'])
 

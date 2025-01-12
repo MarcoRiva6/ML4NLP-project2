@@ -26,7 +26,7 @@ def load_tokenizer(X_train):
 
 @st.cache_data
 def load_data():
-    df = pd.read_pickle(os.path.join(data_path, 'dataset_cleaned.pkl'))
+    df = st.session_state.ds_cleaned
 
     reviews = df[['avis', 'note']]
 
