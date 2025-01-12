@@ -9,6 +9,7 @@ wordcloud
 matplotlib
 seaborn
 gensim==4.3.3
+sentencepiece==0.2.0
 transformers==4.46.3
 torch==2.5.1
 tiktoken
