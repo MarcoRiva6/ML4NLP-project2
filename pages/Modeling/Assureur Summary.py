@@ -8,7 +8,7 @@ data_path = './Traduction avis clients'
 @st.cache_resource
 def load_model_and_tokenizer():
     model_name = "plguillou/t5-base-fr-sum-cnndm"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, force_download=True)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
     return tokenizer, model
 
